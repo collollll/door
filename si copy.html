@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .svg {
+        width: 1000px;
+        height: 700px;
+        background: #eee;
+        overflow: visible;
+        border: 1px solid red;
+      }
+      text {
+        fill: dodgerblue; /*color 안됨*/
+        font-size: 100px;
+        font-weight: bold;
+        margin-left: 50px;
+      }
+      .path {
+        fill: transparent;
+        stroke: crimson;
+        stroke-width: 5;
+      }
+      .test2 {
+        stroke-dasharray: 3000;
+        stroke-dashoffset: 3000;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="portpolio">
+      <svg class="svg">
+        <defs>
+          <path
+            id="test2"
+            class="path"
+            d="M15.97,573.51c-2.38-10.86-3.6-21.92-3.6-33.14c0-150.4,219.96-272.31,491.3-272.31
+	c26.88,0,53.26,1.2,78.97,3.5"
+          />
+        </defs>
+        <text x="10" y="100">
+          <textPath href="#test2">PORTPOLIO</textPath>
+        </text>
+      </svg>
+    </div>
+  </body>
+</html>

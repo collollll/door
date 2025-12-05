@@ -1,0 +1,148 @@
+* {
+  margin: 0px;
+  padding: 0px;
+}
+a {
+  color: inherit;
+  text-decoration: inherit;
+  display: block;
+}
+ul {
+  list-style: none;
+}
+
+body {
+  background-color: black;
+  color: white;
+}
+
+/*  */
+.projectList::before {
+  width: 100%;
+  height: 100%;
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  /* background-image: url("img/test2.png"); */
+  background-size: 30%;
+  background-position: left -10% bottom 20%;
+  /* background-position: left -10% bottom 30%; */
+  background-repeat: no-repeat;
+  animation: moveAndScale 20s infinite alternate ease;
+
+  filter: brightness(0.7) contrast(1.2); /* 배경 전용 필터 */
+  z-index: -1; /* 내용물 뒤로 보내기 */
+}
+.projectList {
+  position: relative;
+}
+@keyframes moveAndScale {
+  50% {
+    background-size: 40%;
+    background-position: left -25% bottom 30%;
+  }
+  /* 100% {
+    background-size: 50% 50%;
+    background-position: center center;
+  } */
+}
+/*  */
+
+#project h2 {
+  text-align: center;
+  font-size: clamp(45px, 7vw, 60px);
+  color: transparent;
+  -webkit-text-stroke: 1px white;
+}
+#project .projectList {
+  width: 100%;
+  height: 100vh;
+  /* border: 1px solid red; */
+  position: sticky;
+  top: 0;
+  background-color: black;
+  box-sizing: border-box;
+}
+.spacer {
+  padding-bottom: 600px;
+}
+#project .projectList .subTitle {
+  font-size: 45px;
+  font-weight: bold;
+  margin-left: 15px;
+}
+#project .contain {
+  width: 70%;
+  text-align: center;
+  /* border: 1px solid blue; */
+  margin: 0px auto;
+  position: absolute;
+  left: 50%;
+  top: 10%;
+  /* transform: translate(-50%, -50%); */
+  transform: translateX(-50%);
+}
+#project .contain img {
+  width: 85%;
+  filter: brightness(90%);
+}
+
+#project .contain .textBox {
+  position: absolute;
+  right: 10%;
+  margin-top: 10px;
+  text-align: right;
+}
+#project .textBox h3 {
+  font-size: 2vw;
+}
+#project .textBox p {
+  margin: 10px 0px 20px;
+}
+#project .textBox .process {
+  background-color: rgb(104, 154, 29);
+  display: inline-block;
+  padding: 8px 15px;
+  border-radius: 18px;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+}
+
+/*  */
+#cursor {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: white;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+  position: fixed; /* 지금은 absolute를 써도 되긴 함, 근데 ab은 부모 영향을 받을수도 있음 */
+  left: 0;
+  top: 0;
+  z-index: 999;
+  transform: translate(-50%, -50%) scale(0);
+  color: black;
+  text-align: center;
+  align-content: center;
+  font-weight: bold;
+  pointer-events: none;
+  /* display: none; */
+  transition: transform 0.3s ease 0.1s;
+  /* transition: background 0.2s; */
+  mix-blend-mode: exclusion;
+}
+#cursor.on {
+  /* background-color: #ff4d6d; */
+  /* box-shadow: 0px, 0px, 20px, rgba(255, 0, 0, 0.3); */
+  display: block;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+/*  */
+/*  */
+/*  */
+/*  */
+/*  */

@@ -1,0 +1,132 @@
+* {
+  margin: 0px;
+  padding: 0px;
+}
+
+/*전체*/
+#main {
+  width: 100%;
+  height: 100vh;
+  background-color: black;
+  position: relative;
+  overflow: hidden;
+}
+#main .images {
+  width: 100%;
+  height: 100%;
+  /* position: relative; */
+}
+
+/*이미지 위치 조정*/
+#main .images img:nth-child(1) {
+  position: absolute;
+  left: -80px;
+  top: -80px;
+  transform: rotate(-20deg);
+}
+#main .images img:nth-child(2) {
+  position: absolute;
+  right: -60px;
+  top: 30px;
+  transform: rotate(-10deg);
+}
+#main .images .circle {
+  width: 200px;
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  background-image: url(img/main_cir.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: absolute;
+  left: 0px;
+  bottom: 0px;
+}
+#main .images .square {
+  width: 350px;
+  height: 150px;
+  transform: rotate(-30deg);
+  background-image: url(img/main_squ.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: absolute;
+  right: -20px;
+  bottom: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.square .text {
+  font-size: 30px;
+  /* text-align: center; */
+  /* align-content: center; */
+  /* align-items: center; */
+  color: black;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+.square .text .white {
+  color: white;
+}
+.square .text .line {
+  -webkit-text-stroke: 1px black;
+  color: transparent;
+}
+
+/*scroll down*/
+.scroll {
+  position: absolute;
+  /* background-color: red; */
+  color: white;
+  left: 50%;
+  bottom: 50px;
+  transform: translateX(-50%);
+}
+.scroll > div {
+  width: 35px;
+  height: 70px;
+  background-color: #eee;
+  border-radius: 20px;
+  margin: 10px auto;
+  padding: 10px 0px 0px;
+  box-sizing: border-box; /*씁 뭔가 이상한데 걍 ab으로 띄우는게?*/
+}
+.scroll > div div {
+  width: 20px;
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  background-color: white;
+  margin: 0px auto;
+}
+
+/*메인 텍스트_포폴*/
+#portpolio {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  color: white;
+}
+svg {
+  background-color: #eee;
+  /* position: absolute;
+  top: 50%;
+  left: 50%; */
+}
+text {
+  color: white;
+  /* position: absolute;
+  top: 50%;
+  left: 50%; */
+}
+path {
+  color: red;
+}
+text {
+  fill: dodgerblue;
+  font-size: 17px;
+  font-weight: bold;
+}
+.path {
+  fill: transparent;
+  stroke: crimson;
+  stroke-width: 5;
+}
