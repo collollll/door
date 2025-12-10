@@ -1,0 +1,50 @@
+#test {
+  height: 200vh;
+}
+#test .pin {
+  height: 50%;
+  /* position: sticky;
+  top: 0; */
+  background-color: bisque;
+  color: black;
+  font-size: 30px;
+  text-align: center;
+  align-content: center;
+}
+#test ul {
+  height: 50%;
+  display: flex;
+  justify-content: center;
+  gap: 50px;
+  border: 1px solid red;
+  position: relative;
+}
+#test li {
+  width: 400px;
+  height: 200px;
+  background-color: green;
+  /* display: none; */
+}
+#test li.on {
+  position: absolute;
+}
+#test li.on:nth-child(1) {
+  left: 8%;
+  top: -15%;
+  transform: scale(0.6);
+}
+#test li.on:nth-child(2) {
+  left: 40%;
+  top: -50%;
+}
+#test li.on:nth-child(3) {
+  right: 10%;
+  top: -20%;
+}
+#test li.on:nth-child(4) {
+  left: 50%;
+  top: -10%;
+  display: block;
+  /* opacity: 0; */
+  transform: scale(0.8);
+}
