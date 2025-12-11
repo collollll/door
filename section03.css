@@ -17,25 +17,7 @@ body {
 }
 
 /*  */
-.projectList::before {
-  width: 100%;
-  height: 100%;
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  /* background-image: url("img/test2.png"); */
-  background-size: 30%;
-  background-position: left -10% bottom 20%;
-  /* background-position: left -10% bottom 30%; */
-  background-repeat: no-repeat;
-  animation: moveAndScale 20s infinite alternate ease;
 
-  filter: brightness(0.7) contrast(1.2); /* 배경 전용 필터 */
-  z-index: -1; /* 내용물 뒤로 보내기 */
-}
 .projectList {
   position: relative;
 }
@@ -51,12 +33,32 @@ body {
 }
 /*  */
 
-#project h2 {
+section h2 {
   text-align: center;
   font-size: clamp(45px, 7vw, 60px);
   color: transparent;
   -webkit-text-stroke: 1px white;
+
+  -webkit-background-clip: text;
+
+  background-image: linear-gradient(0deg, white 0%, white 100%);
+  background-position: 100% 100%;
+  background-size: 100% 0%;
+  background-repeat: no-repeat;
+
+  transition: background-size 0.7s cubic-bezier(0.4, 0, 0.2, 1);
 }
+section h2.active {
+  background-size: 100% 100%;
+}
+
+.textBox img {
+  width: 30px;
+  background-color: white;
+  padding: 10px;
+}
+
+/* project 섹션 */
 #project .projectList {
   width: 100%;
   height: 100vh;
@@ -65,6 +67,7 @@ body {
   top: 0;
   background-color: black;
   box-sizing: border-box;
+  /* margin-left: 20px; */
 }
 .spacer {
   padding-bottom: 600px;
@@ -73,46 +76,208 @@ body {
   font-size: 45px;
   font-weight: bold;
   margin-left: 15px;
+  opacity: 0;
 }
-#project .contain {
-  width: 70%;
-  text-align: center;
-  /* border: 1px solid blue; */
-  margin: 0px auto;
-  position: absolute;
-  left: 50%;
-  top: 10%;
-  /* transform: translate(-50%, -50%); */
-  transform: translateX(-50%);
+#project .projectList .subTitle.down {
+  animation: bounce 0.8s forwards;
 }
-#project .contain img {
-  width: 85%;
-  filter: brightness(90%);
+@keyframes bounce {
+  0% {
+    transform: translateY(-80px);
+    opacity: 0;
+  }
+  60% {
+    transform: translateY(20px);
+  }
+  75% {
+    transform: translateY(-10px);
+  }
+  90% {
+    transform: translateY(10px);
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
-#project .contain .textBox {
+/* project_이너 컨텐츠 */
+#project .contain {
+  width: 90%;
+  height: 80%;
+  text-align: center;
+  /* border: 1px solid blue; */
+  /* margin: 0px auto; */
   position: absolute;
-  right: 10%;
-  margin-top: 10px;
+  /* left: 00%; */
+  top: 50%;
+  /* transform: translate(-50%, -50%); */
+  transform: translateY(-50%);
+
+  display: flex;
+  /* border: 1px solid red; */
+  gap: 15px;
+  margin: 0px 20px;
+}
+#project .projectList:nth-child(4n) .contain {
+  flex-direction: row-reverse;
+  right: 0%;
+}
+#project .projectList:nth-child(4n) .textBox {
   text-align: right;
+}
+
+/* project_이너_목업 이미지 */
+#project .contain > a {
+  width: 85%;
+  /* border: 1px solid blue; */
+  text-align: left;
+  align-content: center;
+  background-color: rgba(255, 255, 255, 0.3);
+
+  transition: 0.4s;
+  /* border-radius: 50%; */
+  text-align: center;
+  filter: brightness(70%);
+  position: relative;
+}
+#project .projectList .contain > a::before {
+  /* width: 100%;
+  height: 100%;
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0; */
+  /* filter: brightness(0.5) contrast(1.2);  */
+  filter: brightness(80%);
+  z-index: -1;
+}
+/* #project .projectList:nth-child(2) .contain > a::before {
+  background: url(img/bg1.jpg) no-repeat center / cover;
+}
+#project .projectList:nth-child(4) .contain > a::before {
+  background: url(img/bg2.jpg) no-repeat center / cover;
+}
+#project .projectList:nth-child(6) .contain > a::before {
+  background: url(img/bg3.jpg) no-repeat center / cover;
+}
+#project .projectList:nth-child(8) .contain > a::before {
+  background: url(img/bg4.jpg) no-repeat center / cover;
+} */
+
+#project .projectList:nth-child(2) .contain > a {
+  background: url(img/bg1.jpg) no-repeat center / cover;
+}
+#project .projectList:nth-child(4) .contain > a {
+  background: url(img/bg2.jpg) no-repeat center / cover;
+}
+#project .projectList:nth-child(6) .contain > a {
+  background: url(img/bg3.jpg) no-repeat center / cover;
+}
+#project .projectList:nth-child(8) .contain > a {
+  background: url(img/bg4.jpg) no-repeat center / cover;
+}
+
+/*  */
+/*  */
+/*  */
+/*  */
+
+/* 실험용 */
+#project .projectList:nth-child(4) {
+  /* position: relative; */
+}
+#project video {
+  width: 75%;
+  position: absolute;
+  /* left: 0px; */
+  /* object-fit: contain; */
+
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#project .contain > a:hover {
+  /* filter: brightness(100%); */
+}
+#project .contain img {
+  width: 90%;
+  /* height: 100%; */
+  /* width: 10%; */
+  /* filter: brightness(90%); */
+}
+
+#project .projectList:nth-child(10) a:hover img {
+  /* display: none;   */
+  /* opacity: 0; */
+}
+#project .projectList:nth-child(10) a:hover video {
+  /* display: block; */
+  /* opacity: 1; */
+}
+#project .projectList:nth-child(10) img {
+  /* position: relative; */
+  opacity: 1;
+  transition: 0.3s;
+}
+#project .projectList:nth-child(10) video {
+  /* width: 90%; */
+  /* display: none; */
+  opacity: 0;
+  transition: 0.5s;
+}
+#project .projectList:nth-child(10) .contain a {
+  width: 100%;
+  /* width: 90%; */
+  border: none;
+}
+
+/*  */
+/*  */
+/*  */
+
+/* project_텍스트 박스 */
+#project .contain .textBox {
+  /* position: absolute; */
+  /* right: 10%;
+  margin-top: 10px; */
+  text-align: left;
 }
 #project .textBox h3 {
   font-size: 2vw;
+
+  margin-left: -50px;
+  opacity: 0;
 }
 #project .textBox p {
   margin: 10px 0px 20px;
+
+  margin-left: -50px;
+  opacity: 0;
 }
+#project .projectList:nth-child(4n) .textBox h3 {
+  margin-left: 0px;
+  margin-right: -50px;
+}
+#project .projectList:nth-child(4n) .textBox p {
+  margin-left: 0px;
+  margin-right: -50px;
+}
+
 #project .textBox .process {
   background-color: rgb(104, 154, 29);
   display: inline-block;
-  padding: 8px 15px;
   border-radius: 18px;
   font-weight: bold;
   border: none;
   cursor: pointer;
 }
+#project .textBox .process a {
+  padding: 8px 20px;
+}
 
-/*  */
+/* project_커서 */
 #cursor {
   width: 50px;
   height: 50px;

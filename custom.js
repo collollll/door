@@ -100,7 +100,7 @@ window.addEventListener("mousemove", (e) => {
   if (!isDragging) return;
 
   let deltaX = e.clientX - startX;
-  let rotationDelta = deltaX * 0.5; // 민감도 조절
+  let rotationDelta = deltaX * -0.5; // 민감도 조절
 
   currentRotation = dragRotation + rotationDelta;
 
