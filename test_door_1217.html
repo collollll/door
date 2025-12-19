@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="test_door_1217.css" />
+  </head>
+  <body>
+    <section id="section1">
+      <!-- 현재 섹션 콘텐츠 -->
+    </section>
+
+    <section id="transition">
+      <div class="scene">
+        <div class="camera">
+          <div class="next-section"></div>
+
+          <div class="door-wrap">
+            <div class="door left"></div>
+            <div class="door right"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="section2">
+      <!-- 실제 다음 섹션 -->
+    </section>
+
+    <script>
+      const scene = document.querySelector("#transition");
+      const camera = document.querySelector(".camera");
+      const leftDoor = document.querySelector(".door.left");
+      const rightDoor = document.querySelector(".door.right");
+
+      window.addEventListener("scroll", () => {
+        const rect = scene.getBoundingClientRect();
+        const progress = Math.min(
+          Math.max(1 - rect.top / window.innerHeight, 0),
+          1
+        );
+
+        // 카메라 전진 (진짜 이동)
+        camera.style.transform = `
+    translateZ(${progress * 600}px)
+  `;
+
+        // 문 열림
+        leftDoor.style.transform = `
+    rotateY(${-progress * 110}deg)
+  `;
+        rightDoor.style.transform = `
+    rotateY(${progress * 110}deg)
+  `;
+      });
+
+      //
+      const doorWrap = document.querySelector(".door-wrap");
+
+      doorWrap.style.transform = `
+  translateZ(${-600 + progress * 600}px)
+  scale(${1 + progress * 8})
+`;
+
+      nextSection.style.transform = `
+  translateZ(${-1200 + progress * 400}px)
+  scale(2)
+`;
+    </script>
+  </body>
+</html>

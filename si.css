@@ -1,8 +1,62 @@
-#test {
-  height: 200vh;
+.ttes > div:nth-child(1) {
+  width: 100px;
+  height: 100px;
+  border-bottom: 1px solid red;
+  border-radius: 50%;
 }
+
+.ttes .scl {
+  width: 200px;
+  border: 1px solid blue;
+}
+.ttes .scl .box {
+  height: 30px;
+  border: 1px solid orange;
+  margin-left: 20px;
+  border-left: 1px solid red;
+  position: relative;
+}
+.ttes .scl .box::before,
+.ttes .scl .box::after {
+  width: 5px;
+  aspect-ratio: 1/1;
+  content: "";
+  border: 1px solid red;
+  border-radius: 50%;
+  position: absolute;
+  left: 0;
+}
+.ttes .scl .box::before {
+  bottom: 100%;
+  /* transform: translateX(-50%); */
+  transform: translateX(-4px);
+}
+.ttes .scl .box::after {
+  top: 100%;
+  transform: translateX(-4px);
+}
+
+/*  */
+/*  */
+/*  */
+/*  */
+/*  */
+/*  */
+/*  */
+/*  */
+#test {
+  height: 100vh;
+}
+
+#test h2 {
+  position: fixed;
+  top: 50%;
+}
+
 #test .pin {
-  height: 50%;
+  /* height: 100%; */
+  height: 2000px;
+  /* height: 50%; */
   /* position: sticky;
   top: 0; */
   background-color: bisque;
@@ -12,7 +66,7 @@
   align-content: center;
 }
 #test ul {
-  height: 50%;
+  /* height: 50%; */
   display: flex;
   justify-content: center;
   gap: 50px;
@@ -24,25 +78,32 @@
   height: 200px;
   background-color: green;
   /* display: none; */
-}
-#test li.on {
+
   position: absolute;
 }
-#test li.on:nth-child(1) {
+#test li.on {
+  /* position: absolute; */
+
+  width: calc(100% / 3 - 35px);
+  height: 300px;
+  position: static;
+  transform: scale(1);
+}
+#design li:nth-child(1) {
   left: 8%;
-  top: -15%;
+  top: -40%;
   transform: scale(0.6);
 }
-#test li.on:nth-child(2) {
+#design li:nth-child(2) {
   left: 40%;
   top: -50%;
 }
-#test li.on:nth-child(3) {
-  right: 10%;
-  top: -20%;
-}
-#test li.on:nth-child(4) {
+#design li:nth-child(3) {
   left: 50%;
+  top: 0%;
+}
+#design li:nth-child(4) {
+  right: 10%;
   top: -10%;
   display: block;
   /* opacity: 0; */

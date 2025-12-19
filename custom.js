@@ -1,98 +1,195 @@
+// project 섹션
+let h2s = document.querySelectorAll("section h2");
+
+function titleFill() {
+  h2s.forEach((i) => {
+    let h2Top = i.getBoundingClientRect().top;
+    let h2UpPoint = window.innerHeight * 0.6; // 화면 30% 지점
+
+    if (h2Top < h2UpPoint) {
+      i.classList.add("active"); // 화면 30% 지점에 도달하면
+    } else {
+      i.classList.remove("active"); // 위로 올라가면 제거
+    }
+  });
+}
+
+window.addEventListener("scroll", titleFill);
+window.addEventListener("resize", titleFill); // 리사이즈 대응
+
+//  project_커서 따라다니기
+$(function () {
+  $(document).on("mousemove", function (e) {
+    $("#cursor").css({ left: e.clientX + "px", top: e.clientY + "px" });
+  });
+
+  $(".projectList .contain a").on("mouseenter", function () {
+    $("#cursor").addClass("on");
+  });
+  $(".projectList .contain a").on("mouseleave", function () {
+    $("#cursor").removeClass("on");
+  });
+});
+
+// project_텍스트 박스 안 효과 적용
+$(window).on("scroll resize", function () {
+  $("#project .projectList").each(function (index) {
+    let proListTop = $(this).offset().top - $(window).scrollTop();
+    let proListPoint = window.innerHeight * 0.5; // 화면 30%
+
+    let textBox = $(this).find(".textBox");
+    let filter = $(this).find(".contain > a");
+
+    if (proListPoint > proListTop && !$(this).hasClass("animated")) {
+      $(this).addClass("animated");
+      $(this).find(".subTitle").addClass("down");
+
+      if (index % 2 == 0) {
+        $(textBox)
+          .find("h3")
+          .stop(true, true)
+          .delay(500)
+          .animate({ "margin-left": "0px", opacity: "1" }, function () {
+            $(textBox)
+              .find("p")
+              .stop(true, true)
+              .animate({ "margin-left": "0px", opacity: "1" }, function () {
+                $(textBox).find(".process").addClass("on");
+                $(filter).css({ filter: "brightness(105%)" });
+              });
+          });
+      } else {
+        $(textBox)
+          .find("h3")
+          .stop(true, true)
+          .delay(500)
+          .animate({ "margin-right": "0px", opacity: 1 }, function () {
+            $(textBox)
+              .find("p")
+              .stop(true, true)
+              .animate({ "margin-right": "0px", opacity: 1 }, function () {
+                $(textBox).find(".process").addClass("on");
+                $(filter).css({ filter: "brightness(105%)" });
+              });
+          });
+      }
+    } else if (proListPoint <= proListTop && $(this).hasClass("animated")) {
+      $(this).removeClass("animated");
+      $(this).find(".subTitle").removeClass("down");
+
+      if (index % 2 == 0) {
+        $(textBox)
+          .find("h3")
+          .stop(true, true)
+          .delay(500)
+          .animate({ "margin-left": "-50px", opacity: "0" }, function () {
+            $(textBox)
+              .find("p")
+              .stop(true, true)
+              .animate({ "margin-left": "-50px", opacity: "0" }, function () {
+                $(textBox).find(".process").removeClass("on");
+                $(filter).css({ filter: "brightness(70%)" });
+              });
+          });
+      } else {
+        $(textBox)
+          .find("h3")
+          .stop(true, true)
+          .delay(500)
+          .animate({ "margin-right": "-50px", opacity: 0 }, function () {
+            $(textBox)
+              .find("p")
+              .stop(true, true)
+              .animate({ "margin-right": "-50px", opacity: 0 }, function () {
+                $(textBox).find(".process").removeClass("on");
+                $(filter).css({ filter: "brightness(70%)" });
+              });
+          });
+      }
+    }
+  });
+});
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 // work 섹션
 
 let workList = document.querySelector("#work .workList");
-let card = document.querySelectorAll("#work .card");
-console.log(card);
+let cards = document.querySelectorAll("#work .card");
+// console.log(card);
 
 let currentAngle = 40; // 초기 각도 (CSS의 초기값과 맞춤)
-let cardCount = card.length; // 카드 개수
+let cardCount = cards.length; // 카드 개수
 let angle = 360 / cardCount; // 카드당 각도 자동 계산
 
 // 카드 위치 자동 설정
-card.forEach((i, index) => {
+cards.forEach((i, index) => {
   let angleFirst = index * angle;
-  i.style.transform = `rotateY(${angleFirst}deg) translateZ(-250px)`;
+  i.style.transform = `rotateY(${angleFirst}deg) translateZ(-400px)`;
 });
 
-// 스크롤 시 회전
+let targetRotation = 0; // 목표 회전값
+let currentCardIndex = 0; // 현재 카드 인덱스 (0~4)
+const totalCards = 5;
+let isDragging = false;
+let workSection = document.querySelector("#work");
+let workWrap = document.querySelector("#work .wrap");
+let currentRotation = 0; // 현재 회전 각도 (이게 유일한 기준점)
 
-let currentRotation = 0;
-let baseRotation = 0; // 스크롤 시작 시점의 기본값
+let hasDragged = false; // 실제로 드래그했는지 체크
+
+// 스크롤 이벤트
+let lastScrollRotation = 0; // 마지막 스크롤 회전값 저장
 
 window.addEventListener("scroll", () => {
-  let workSection = document.querySelector("#work");
+  //   if (isDragging) return;
+
   let rect = workSection.getBoundingClientRect();
-  // const windowHeight = window.innerHeight;
 
-  // work 섹션이 화면에 보이는 동안만 작동
   if (rect.top < window.innerHeight && rect.bottom > 0) {
-    // // 섹션이 화면을 통과하는 진행도 (0 ~ 1)
-    // let progress = 1 - rect.top / window.innerHeight;
-    // progress = Math.max(0, Math.min(1, progress)); // 0 ~ 1 클램프
+    let sectionHeight = rect.height - window.innerHeight;
+    let scrollProgress = Math.abs(rect.top) / sectionHeight;
 
-    // // 회전 속도 조절 (180도, 360도, 720도 등)
-    // let scrollRotation = progress * 180;
+    // 스크롤 진행도를 회전 각도로 변환
+    let scrollRotation = scrollProgress * 360;
 
-    // currentRotation을 스크롤 값으로 업데이트 ⭐
-    // currentRotation = baseRotation + scrollRotation;
+    // 스크롤 차이를 현재 각도에 더함 (이어서 회전)
+    let rotationDelta = scrollRotation - lastScrollRotation;
+    currentRotation += rotationDelta;
+    lastScrollRotation = scrollRotation;
 
-    if (!isDragging) {
-      // 드래그 중이 아닐 때만 스크롤 적용
-      // 섹션 내에서 스크롤한 양 계산
-      let sectionScrolled = Math.abs(rect.top); // 0부터 시작
-      let maxScroll = rect.height - window.innerHeight; // 최대 스크롤 가능 거리
-
-      // 진행도 계산 (0 ~ 1)
-      let progress = sectionScrolled / maxScroll;
-
-      // 360도 회전 (한 바퀴)
-      currentRotation = progress * 180;
-
-      workList.style.transform = `translateZ(500px) rotateX(0deg) rotateY(${currentRotation}deg)`;
-    }
+    // 72도 단위로 스냅
+    let snappedRotation = Math.round(currentRotation / angle) * angle;
+    workList.style.transform = `translateZ(500px) rotateX(0deg) rotateY(${snappedRotation}deg)`;
   }
 });
 
-// 카드 누르면 이동하기
-
-// card.forEach((i, index) => {
-//   i.addEventListener("click", () => {
-//     // 클릭한 카드가 정면(40도)에 오도록 회전
-//     // let targetAngle = 40 - index * angle;
-//     let targetAngle = -(index * angle);
-
-//     // let diff = ((to - from + 180) % 360) - 180;
-//     // return from + diff;
-//     // 최단 경로 계산 (음수 처리 개선)
-//     let diff = targetAngle - currentRotation;
-//     diff = ((diff + 180) % 360) - 180;
-//     if (diff < -180) diff += 360; // 음수 모듈로 보정
-
-//     currentRotation += diff;
-
-//     // 새로운 기본값으로 설정!
-//     // baseRotation = currentRotation;
-
-//     workList.style.transform = `translateZ(500px) rotateX(0deg) rotateY(${currentRotation}deg)`;
-//   });
-// });
-
-// 마우스 드래그 이벤트
-
-let isDragging = false;
+// 드래그 이벤트
 let startX = 0;
-let dragRotation = 0;
-// let currentRotation = 0;
-let isInCarousel = false; // 캐러셀 영역에 있는지
-let carouselProgress = 0; // 캐러셀 회전 진행도 (0~1)
+let dragStartRotation = 0;
 
-workList.addEventListener("mousedown", (e) => {
-  // if (!isInCarousel) return;
+workWrap.addEventListener("mousedown", (e) => {
+  // 🌹카드를 직접 클릭한 경우 드래그 무시
+  //   if (e.target.closest(".card")) {
+  //     return;
+  //   }
+  //   hasDragged = false; // 초기화
+  //
+
   isDragging = true;
   startX = e.clientX;
-  dragRotation = currentRotation;
-  workList.style.transition = "none"; // 드래그 중 애니메이션 끄기
-
+  dragStartRotation = currentRotation; // 현재 각도 저장
+  workList.style.transition = "none";
+  workWrap.style.cursor = "grabbing";
   e.preventDefault();
 });
 
@@ -100,18 +197,64 @@ window.addEventListener("mousemove", (e) => {
   if (!isDragging) return;
 
   let deltaX = e.clientX - startX;
-  let rotationDelta = deltaX * -0.5; // 민감도 조절
+  let rotationDelta = deltaX * -0.3;
 
-  currentRotation = dragRotation + rotationDelta;
+  // 🌹5px 이상 움직였을 때만 드래그로 인정
+  //   if (Math.abs(deltaX) > 5) {
+  //     hasDragged = true;
+  //   }
+  //
 
+  // 드래그 시작 각도에서 이어서 회전
+  currentRotation = dragStartRotation + rotationDelta;
   workList.style.transform = `translateZ(500px) rotateX(0deg) rotateY(${currentRotation}deg)`;
 });
 
 window.addEventListener("mouseup", () => {
+  if (!isDragging) return;
+
   isDragging = false;
-  workList.style.transition = ""; // 애니메이션 복원
+  workList.style.transition = "0.5s transform ease-out";
+  workWrap.style.cursor = "grab";
+
+  // 🌹실제로 드래그한 경우만 스냅
+  //   if (hasDragged) {
+  //
+  // 가장 가까운 카드로 스냅
+  let snappedRotation = Math.round(currentRotation / 72) * 72;
+  currentRotation = snappedRotation;
+
+  workList.style.transform = `translateZ(500px) rotateX(0deg) rotateY(${currentRotation}deg)`;
+  //   }
 });
 
+// work modal
+// let scrollTop = 0;
+
+$("#work li").on("click", function () {
+  //   $("#work .workModal").css({ display: "block" });
+  $("#work .workModal").slideDown(800);
+
+  let i = $(this).index();
+  $("#work .workModal .modalText").eq(i).css({ display: "flex" });
+  console.log(i);
+
+  //   scrollTop = $(window).scrollTop();
+  $("body").addClass("modalOpen");
+  // .css({
+  //   position: "fixed",
+  //   top: -scrollTop + "px",
+  //   width: "100%",
+  // });
+});
+
+$("#work .workModal .close").on("click", function () {
+  //   $("#work .workModal").css({ display: "none" });
+  $("#work .workModal").slideUp();
+  $("body").removeClass("modalOpen");
+  // $("#work .workModal .modalText").css({ display: "none" });
+  $("#work .workModal .modalText").slideUp();
+});
 //
 //
 //
@@ -124,132 +267,364 @@ window.addEventListener("mouseup", () => {
 
 // 일러스트 섹션
 
+// gsap.registerPlugin(ScrollTrigger);
+// // let cards = document.querySelectorAll("#design li");
+
+// // gsap.set("#design li:nth-child(1)", {
+// //   left: "8%",
+// //   top: "-15%",
+// //   scale: 0.6,
+// // });
+
+// gsap
+//   .timeline({
+//     scrollTrigger: {
+//       trigger: "#design",
+//       start: "20% 30%",
+//       end: "+=400%",
+//       pin: true,
+//       markers: true,
+//       // toggleActions: "play none none reverse",
+//       scrub: 0.5,
+//       invalidateOnRefresh: true, // 추가
+//     },
+//   })
+//   .to(
+//     "#design li:nth-child(1)",
+//     {
+//       opacity: 1,
+//       y: -400,
+//       x: 50,
+//       duration: 2,
+//       scale: 1,
+//       // ease: "elastic.out(1,0.5)",
+//       // ease: "back.out(4)",
+//       // ease: "elastic.out(1.2,0.75)",
+//       ease: "elastic.out(0.5, 0.3)",
+//     },
+//     0
+//   )
+//   .to(
+//     "#design li:nth-child(1)",
+//     {
+//       y: 300,
+//       x: 100,
+//       scale: 1,
+//       duration: 3,
+//       // opacity: 0,
+//       // ease: "elastic.in(1.2,0.75)",
+//       // ease: "elastic.out(0.5, 0.3)",
+//       ease: "elastic.out(0.3, 0.2)",
+
+//       onComplete: () => {
+//         document.querySelector("#design li:nth-child(1)").classList.add("on");
+//         gsap.set("#design li:nth-child(1)", { clearProps: "all" });
+//       },
+//       //   },
+//     },
+//     2
+//   )
+//   .to(
+//     "#design li:nth-child(2)",
+//     {
+//       opacity: 1,
+//       y: -200,
+//       x: -70,
+//       scale: 1.3,
+//       duration: 2,
+//       ease: "elastic.out(1,0.5)",
+//     },
+//     0.8
+//   )
+//   .to("#design li:nth-child(2)", {
+//     y: 100,
+//     x: -150,
+//     scale: 0.8,
+//     duration: 3,
+//     // opacity: 0,
+//     ease: "elastic.out(1,0.5)",
+
+//     onComplete: () => {
+//       document.querySelector("#design li:nth-child(2)").classList.add("on");
+//       gsap.set("#design li:nth-child(2)", { clearProps: "all" });
+//     },
+//   })
+//   .to(
+//     "#design li:nth-child(3)",
+//     {
+//       opacity: 1,
+//       x: -150,
+//       y: -400,
+//       scale: 1.3,
+//       duration: 2,
+//       ease: "elastic.out(1.2,0.75)",
+//     },
+//     1.6
+//   )
+//   .to("#design li:nth-child(3)", {
+//     x: -100,
+//     y: -50,
+//     scale: 1,
+//     duration: 3,
+//     // opacity: 0,
+//     ease: "elastic.out(1.2,0.75)",
+
+//     onComplete: () => {
+//       document.querySelector("#design li:nth-child(3)").classList.add("on");
+//       gsap.set("#design li:nth-child(3)", { clearProps: "all" });
+//     },
+//   })
+//   .to(
+//     "#design li:nth-child(4)",
+//     {
+//       opacity: 1,
+//       x: 150,
+//       y: -400,
+//       scale: 1.3,
+//       duration: 2,
+//       ease: "elastic.out(1.2,0.75)",
+
+//       // ease: "elastic.out(1, 0.5)",
+//     },
+//     2.4
+//   )
+//   .to("#design li:nth-child(4)", {
+//     x: 250,
+//     y: 50,
+//     scale: 1,
+//     duration: 3,
+//     // opacity: 0,
+//     ease: "elastic.out(1.2,0.75)",
+
+//     onComplete: () => {
+//       document.querySelector("#design li:nth-child(4)").classList.add("on");
+//       gsap.set("#design li:nth-child(4)", { clearProps: "all" });
+//     },
+//   });
+
 gsap.registerPlugin(ScrollTrigger);
-// let cards = document.querySelectorAll("#design li");
 
-// gsap.set("#design li:nth-child(1)", {
-//   left: "8%",
-//   top: "-15%",
-//   scale: 0.6,
-// });
+// s4
+ScrollTrigger.matchMedia({
+  "(min-width:821px)": function () {
+    gsap.set($("#design li").eq(0), {
+      y: "-250vh",
+      x: "-5vw",
+      scale: 0.6,
+      ease: "none",
+    });
+    gsap.set(
+      $("#design li").eq(1),
+      { y: "-220vh", x: "10vw", scale: 1.1, ease: "none" },
+      "-=95%"
+    );
+    gsap.set(
+      $("#design li").eq(3),
+      { y: "-250vh", x: "20vw", scale: 0.4, ease: "none" }, // -200vh 20vw
+      "-=90%" // -=85%
+    );
+    gsap.set(
+      $("#design li").eq(2),
+      { y: "-200vh", x: "-5vw", scale: 0.9, ease: "none" }, // -200vw 1vw
+      "-=85%"
+    );
+    // gsap.set(
+    //   $("#design li").eq(6),
+    //   { y: "-150vh", x: "0vw", scale: 0.7, ease: "none" },
+    //   "-=85%"
+    // );
+    gsap.set(
+      $("#design li").eq(5),
+      { y: "-210vh", x: "0vw", scale: 0.4, ease: "none" }, // -180vh
+      "-=85%"
+    );
+    // gsap.set(
+    //   $(".#design li").eq(8),
+    //   { y: "-100vh", x: "-10vw", scale: 0.4, ease: "none" },
+    //   "-=95%"
+    // );
+    gsap.set(
+      $("#design li").eq(4),
+      { y: "-190vh", x: "-30vw", scale: 1, ease: "none" }, // -150vh -20vw
+      "-=95%"
+    );
+    // gsap.set(
+    //   $("#design li").eq(7),
+    //   { y: "-120vh", x: "5vw", scale: 0.8, ease: "none" },
+    //   "-=95%"
+    // );
 
-gsap
-  .timeline({
-    scrollTrigger: {
-      trigger: "#design",
-      start: "20% 30%",
-      end: "+=400%",
-      pin: true,
-      markers: true,
-      toggleActions: "play none none reverse",
-      scrub: 0.5,
-      invalidateOnRefresh: true, // 추가
-    },
-  })
-  .to(
-    "#design li:nth-child(1)",
-    {
-      opacity: 1,
-      y: -400,
-      x: 50,
-      duration: 2,
-      scale: 1,
-      // ease: "elastic.out(1,0.5)",
-      // ease: "back.out(4)",
-      ease: "elastic.out(1.2,0.75)",
-    },
-    0
-  )
-  .to(
-    "#design li:nth-child(1)",
-    {
-      y: 200,
-      x: 100,
-      scale: 1,
-      duration: 3,
-      // opacity: 0,
-      ease: "elastic.in(1.2,0.75)",
+    gsap
+      .timeline({
+        scrollTrigger: {
+          trigger: "#design",
+          start: "top top",
+          end: "bottom bottom",
+          pin: "#design .pin p",
+          pinSpacing: false,
+          scrub: 1,
+          markers: true,
+        },
+      })
+      .to("#design .pin p", {
+        opacity: 0.1,
+        duration: 0.1,
+      })
+      .to($("#design li").eq(0), {
+        y: 0,
+        x: 0,
+        scale: 1,
+        ease: "none",
 
-      onComplete: () => {
-        document
-          .querySelector("#design li:nth-child(1)")
-          .classList.remove("on");
-        gsap.set("#design li:nth-child(1)", { clearProps: "all" });
-      },
+        onComplete: () => {
+          document.querySelector("#design li:nth-child(1)").classList.add("on");
+          // gsap.set("#design li:nth-child(2)", { clearProps: "all" });
+        },
+        onReverseComplete: () => {
+          document
+            .querySelector("#design li:nth-child(1)")
+            .classList.remove("on");
+        },
+      })
+      .to(
+        $("#design li").eq(1),
+        {
+          y: 0,
+          x: 0,
+          scale: 1,
+          ease: "none",
+          onComplete: () => {
+            document
+              .querySelector("#design li:nth-child(2)")
+              .classList.add("on");
+            // gsap.set("#design li:nth-child(2)", { clearProps: "all" });
+          },
+          onReverseComplete: () => {
+            document
+              .querySelector("#design li:nth-child(2)")
+              .classList.remove("on");
+          },
+        },
+        "-=95%"
+      )
+      .to(
+        $("#design li").eq(3),
+        {
+          y: 0,
+          x: 0,
+          scale: 1,
+          ease: "none",
+          onComplete: () => {
+            document
+              .querySelector("#design li:nth-child(4)")
+              .classList.add("on");
+            // gsap.set("#design li:nth-child(2)", { clearProps: "all" });
+          },
+          onReverseComplete: () => {
+            document
+              .querySelector("#design li:nth-child(4)")
+              .classList.remove("on");
+          },
+        },
+        "-=85%"
+      )
+      .to(
+        $("#design li").eq(2),
+        {
+          y: 0,
+          x: 0,
+          scale: 1,
+          ease: "none",
+          onComplete: () => {
+            document
+              .querySelector("#design li:nth-child(3)")
+              .classList.add("on");
+            // gsap.set("#design li:nth-child(2)", { clearProps: "all" });
+          },
+          onReverseComplete: () => {
+            document
+              .querySelector("#design li:nth-child(3)")
+              .classList.remove("on");
+          },
+        },
+        "-=85%"
+      )
+      // .to(
+      //   $("#design li").eq(6),
+      //   {
+      //     y: 0,
+      //     x: 0,
+      //     scale: 1,
+      //     ease: "none",
+      //     onComplete: () => {
+      //       document
+      //         .querySelector("#design li:nth-child(7)")
+      //         .classList.add("on");
+      //       // gsap.set("#design li:nth-child(2)", { clearProps: "all" });
+      //     },
       //   },
-    },
-    2
-  )
-  .to(
-    "#design li:nth-child(2)",
-    {
-      opacity: 1,
-      y: -200,
-      x: -70,
-      scale: 1.3,
-      duration: 2,
-      ease: "elastic.out(1,0.5)",
-
-      // ease: "elastic.out(1, 0.5)",
-    },
-    0.8
-  )
-  .to("#design li:nth-child(2)", {
-    y: 100,
-    x: -150,
-    scale: 0.8,
-    duration: 3,
-    opacity: 0,
-    ease: "elastic.out(1,0.5)",
-
-    onComplete: () => {
-      document.querySelector("#design li:nth-child(2)").classList.remove("on");
-      gsap.set("#design li:nth-child(2)", { clearProps: "all" });
-    },
-  })
-  .to(
-    "#design li:nth-child(3)",
-    {
-      opacity: 1,
-      x: -150,
-      y: -400,
-      scale: 1.3,
-      duration: 2,
-      // ease: "elastic.out(1, 0.5)",
-    },
-    1.6
-  )
-  .to("#design li:nth-child(3)", {
-    x: -100,
-    y: -50,
-    scale: 1,
-    duration: 3,
-    opacity: 0,
-    onComplete: () => {
-      document.querySelector("#design li:nth-child(3)").classList.remove("on");
-      gsap.set("#design li:nth-child(3)", { clearProps: "all" });
-    },
-  })
-  .to(
-    "#design li:nth-child(4)",
-    {
-      opacity: 1,
-      x: 150,
-      y: -400,
-      scale: 1.3,
-      duration: 2,
-      // ease: "elastic.out(1, 0.5)",
-    },
-    2.4
-  )
-  .to("#design li:nth-child(4)", {
-    x: 250,
-    y: 50,
-    scale: 1,
-    duration: 3,
-    opacity: 0,
-    onComplete: () => {
-      document.querySelector("#design li:nth-child(4)").classList.remove("on");
-      gsap.set("#design li:nth-child(4)", { clearProps: "all" });
-    },
-  });
+      //   "-=85%"
+      // )
+      .to(
+        $("#design li").eq(5),
+        {
+          y: 0,
+          x: 0,
+          scale: 1,
+          ease: "none",
+          onComplete: () => {
+            document
+              .querySelector("#design li:nth-child(6)")
+              .classList.add("on");
+            // gsap.set("#design li:nth-child(2)", { clearProps: "all" });
+          },
+          onReverseComplete: () => {
+            document
+              .querySelector("#design li:nth-child(6)")
+              .classList.remove("on");
+          },
+        },
+        "-=85%"
+      )
+      // .to($(".s4 li").eq(8), { y: 0, x: 0, scale: 1, ease: "none" }, "-=95%")
+      .to(
+        $("#design li").eq(4),
+        {
+          y: 0,
+          x: 0,
+          scale: 1,
+          ease: "none",
+          onComplete: () => {
+            document
+              .querySelector("#design li:nth-child(5)")
+              .classList.add("on");
+            // gsap.set("#design li:nth-child(2)", { clearProps: "all" });
+          },
+          onReverseComplete: () => {
+            document
+              .querySelector("#design li:nth-child(5)")
+              .classList.remove("on");
+          },
+        },
+        "-=95%"
+      )
+      // .to($(".s4 li").eq(7), { y: 0, x: 0, scale: 1, ease: "none" }, "-=95%")
+      .from($("#design ul"), { opacity: 1 });
+  },
+  // "(max-width: 820px)": function () {
+  //   gsap
+  //     .timeline({
+  //       scrollTrigger: {
+  //         trigger: "._s._about .s4",
+  //         start: "top center+=20%",
+  //         toggleActions: "play none none reverse",
+  //       },
+  //     })
+  //     .from("._s._about .s4 .pintxt", { opacity: 0, y: 40, duration: 0.8 })
+  //     .from(
+  //       "._s._about .s4 .grid",
+  //       { opacity: 0, y: 40, duration: 0.8 },
+  //       "-=80%"
+  //     );
+  // },
+});

@@ -46,7 +46,7 @@ section h2 {
   background-size: 100% 0%;
   background-repeat: no-repeat;
 
-  transition: background-size 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: background-size 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
 section h2.active {
   background-size: 100% 100%;
@@ -70,7 +70,7 @@ section h2.active {
   /* margin-left: 20px; */
 }
 .spacer {
-  padding-bottom: 600px;
+  padding-bottom: 800px;
 }
 #project .projectList .subTitle {
   font-size: 45px;
@@ -239,6 +239,7 @@ section h2.active {
 
 /* project_텍스트 박스 */
 #project .contain .textBox {
+  width: 15%;
   /* position: absolute; */
   /* right: 10%;
   margin-top: 10px; */
@@ -265,6 +266,15 @@ section h2.active {
   margin-right: -50px;
 }
 
+#project .textBox .buttons {
+  /*  */
+  display: flex;
+  gap: 5px;
+  /* justify-content: space-between; */
+}
+#project .projectList:nth-child(4n) .textBox .buttons {
+  justify-content: right;
+}
 #project .textBox .process {
   background-color: rgb(104, 154, 29);
   display: inline-block;
@@ -272,9 +282,22 @@ section h2.active {
   font-weight: bold;
   border: none;
   cursor: pointer;
+
+  /*  */
+  opacity: 0;
+  transform: translateY(10px);
+  transition: 0.5s;
+}
+#project .textBox .process.go {
+  /*  */
+  transition-delay: 0.3s;
+}
+#project .textBox .process.on {
+  opacity: 1;
+  transform: translateY(0px);
 }
 #project .textBox .process a {
-  padding: 8px 20px;
+  padding: 8px 22px;
 }
 
 /* project_커서 */

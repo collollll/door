@@ -54,6 +54,7 @@ $(window).on("scroll resize", function () {
     let proListPoint = window.innerHeight * 0.5; // 화면 30%
 
     let textBox = $(this).find(".textBox");
+    let filter = $(this).find(".contain > a");
 
     if (proListPoint > proListTop && !$(this).hasClass("animated")) {
       $(this).addClass("animated");
@@ -68,7 +69,10 @@ $(window).on("scroll resize", function () {
             $(textBox)
               .find("p")
               .stop(true, true)
-              .animate({ "margin-left": "0px", opacity: "1" });
+              .animate({ "margin-left": "0px", opacity: "1" }, function () {
+                $(textBox).find(".process").addClass("on");
+                $(filter).css({ filter: "brightness(105%)" });
+              });
           });
       } else {
         $(textBox)
@@ -79,7 +83,10 @@ $(window).on("scroll resize", function () {
             $(textBox)
               .find("p")
               .stop(true, true)
-              .animate({ "margin-right": "0px", opacity: 1 });
+              .animate({ "margin-right": "0px", opacity: 1 }, function () {
+                $(textBox).find(".process").addClass("on");
+                $(filter).css({ filter: "brightness(105%)" });
+              });
           });
       }
     } else if (proListPoint <= proListTop && $(this).hasClass("animated")) {
@@ -95,7 +102,10 @@ $(window).on("scroll resize", function () {
             $(textBox)
               .find("p")
               .stop(true, true)
-              .animate({ "margin-left": "-50px", opacity: "0" });
+              .animate({ "margin-left": "-50px", opacity: "0" }, function () {
+                $(textBox).find(".process").removeClass("on");
+                $(filter).css({ filter: "brightness(70%)" });
+              });
           });
       } else {
         $(textBox)
@@ -106,7 +116,10 @@ $(window).on("scroll resize", function () {
             $(textBox)
               .find("p")
               .stop(true, true)
-              .animate({ "margin-right": "-50px", opacity: 0 });
+              .animate({ "margin-right": "-50px", opacity: 0 }, function () {
+                $(textBox).find(".process").removeClass("on");
+                $(filter).css({ filter: "brightness(70%)" });
+              });
           });
       }
     }

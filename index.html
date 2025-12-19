@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
 
-    <link rel="stylesheet" href="section03.css" />
     <link rel="stylesheet" href="style.css" />
 
     <script src="js/jquery-3.7.1.min.js"></script>
@@ -13,6 +12,10 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+    />
   </head>
   <body>
     <!-- 251205 시작 -->
@@ -21,7 +24,10 @@
       <div class="images">
         <div class="tri"><img src="img/main_tri.png" alt="" /></div>
         <img src="img/main_bars.png" alt="" />
-        <div class="circle"><h3>WEB PUBLISH</h3></div>
+        <div class="circle">
+          <!-- <h3>WEB PUBLISH</h3> -->
+          <img src="img/cir2.png" alt="" />
+        </div>
         <!-- <img src="img/main_cir.png" alt="" /> -->
         <div class="square">
           <div class="text">
@@ -38,9 +44,14 @@
         </div>
         <!-- <img src="img/main_squ.png" alt="" /> -->
       </div>
-      <div class="center">
+
+      <!-- <div class="center">
         <div>
-          <svg class="mainSvg">
+          <svg
+            class="mainSvg"
+            viewBox="0 0 1000 600"
+            preserveAspectRatio="xMidYMid meet"
+          >
             <defs>
               <path
                 id="test2"
@@ -50,10 +61,46 @@
               />
             </defs>
             <text>
-              <textPath href="#test2">PORTPOLIO</textPath>
+              <textPath href="#test2" startOffset="50%" text-anchor="middle">
+                PORTPOLIO
+              </textPath>
             </text>
           </svg>
         </div>
+        <div class="mainTest">웹페이지의 문을 열다</div>
+      </div> -->
+
+      <!-- <div class="center">
+        <div class="mainTest">
+          <h2>웹페이지의 문을 열다</h2>
+          <div>
+            <svg
+              class="mainSvg"
+              viewBox="0 0 1000 800"
+              preserveAspectRatio="xMidYMid meet"
+            >
+              <defs>
+                <path
+                  id="test2"
+                  class="path"
+                  d="M15.97,573.51c-2.38-10.86-3.6-21.92-3.6-33.14c0-150.4,219.96-272.31,491.3-272.31
+	c26.88,0,53.26,1.2,78.97,3.5"
+                />
+              </defs>
+              <text>
+                <textPath href="#test2" startOffset="200" text-anchor="start">
+                  PORTPOLIO
+                </textPath>
+              </text>
+            </svg>
+          </div>
+        </div>
+      </div> -->
+
+      <div class="mainPic">
+        <!-- <img src="img/MAIN24.png" alt="" /> -->
+        <!-- <h2>웹페이지의 문을 열다</h2> -->
+        <img src="img/main00.png" alt="" />
       </div>
 
       <div class="scroll">
@@ -62,6 +109,74 @@
           <div></div>
         </div>
       </div>
+    </section>
+
+    <section id="about">
+      <h2>ABOUT ME</h2>
+      <div class="top">
+        <div class="photo">
+          <img src="img/bg1.jpg" alt="" />
+          <svg class="drawLeft">
+            <rect />
+          </svg>
+          <svg class="drawRight">
+            <rect />
+          </svg>
+        </div>
+        <div class="introduce">
+          안녕하세요 웹퍼블리셔 조현정입니다. 주어진 일을 성실히 수행하며 여러
+          문제에 도전하는 것을 좋아합니다. 누구나 보기 쉽고 사용에 편리한
+          웹페이지를 만들고자 합니다.
+        </div>
+      </div>
+      <div class="middle">
+        <div class="edu">
+          <h4>학력</h4>
+          <div class="box">
+            <p>
+              2020.03 ~ 2025.02<br />
+              가톨릭대학교 졸업
+            </p>
+            <p>
+              2025.06 ~ 2025.12<br />
+              MBC 아카데미 ~ 수료
+            </p>
+          </div>
+        </div>
+        <div class="certi">
+          <h4>자격증</h4>
+          <div class="box">
+            <p>컴퓨터활용능력 1급</p>
+            <p>GTQ 1급</p>
+            <p>웹디자인기능사</p>
+          </div>
+        </div>
+      </div>
+      <div class="bottom">
+        <ul class="line lineLeft">
+          <!-- <li><img src="img/css_logo.svg" alt="" /></li> -->
+          <!-- <li><img src="img/figma_logo.svg" alt="" /></li> -->
+          <li><img src="img/html5_logo.png" alt="" /></li>
+          <li><img src="img/github_logo.png" alt="" /></li>
+          <li><img src="img/jquery_logo.svg" alt="" /></li>
+          <li><img src="img/Premiere_logo.svg" alt="" /></li>
+          <li><img src="img/gsap2.png" alt="" /></li>
+          <li><img src="img/Group 1.png" alt="" /></li>
+          <li><img src="img/reactjs.svg" alt="" /></li>
+        </ul>
+        <ul class="line lineRight">
+          <li><img src="img/css-3.svg" alt="" /></li>
+          <li><img src="img/photoshop_logo.png" alt="" /></li>
+          <li><img src="img/javascript_logo.svg" alt="" /></li>
+          <li><img src="img/illustrator_logo.png" alt="" /></li>
+          <li><img src="img/after-effects_logo.svg" alt="" /></li>
+          <li><img src="img/visual-studio-code_logo.png" alt="" /></li>
+          <li><img src="img/firebase.svg" alt="" /></li>
+        </ul>
+      </div>
+      <!--배경 원 이미지-->
+      <img src="" alt="" />
+      <img src="" alt="" />
     </section>
 
     <section id="project">
@@ -75,9 +190,14 @@
           <div class="textBox">
             <h3>Find Treasure</h3>
             <p>#HTML #CSS #JS</p>
-            <p></p>
-            <p></p>
-            <button class="process"><a href="#">작업과정</a></button>
+            <div class="buttons">
+              <button class="process"><a href="#">기획서</a></button>
+              <button class="process go">
+                <a href="https://collollll.github.io/find-treasure/">
+                  <i class="fa-solid fa-arrow-up-right-from-square"></i
+                ></a>
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -92,7 +212,14 @@
           <div class="textBox">
             <h3>ToDo List</h3>
             <p>#HTML #CSS #JS</p>
-            <button class="process"><a href="#">작업과정</a></button>
+            <div class="buttons">
+              <button class="process"><a href="#">기획서</a></button>
+              <button class="process go">
+                <a href="https://collollll.github.io/todolist/">
+                  <i class="fa-solid fa-arrow-up-right-from-square"></i
+                ></a>
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -107,7 +234,14 @@
           <div class="textBox">
             <h3>Movie Board</h3>
             <p>#HTML #CSS #JS</p>
-            <button class="process"><a href="#">작업과정</a></button>
+            <div class="buttons">
+              <button class="process"><a href="#">기획서</a></button>
+              <button class="process go">
+                <a href="https://collollll.github.io/movieboard/">
+                  <i class="fa-solid fa-arrow-up-right-from-square"></i
+                ></a>
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -118,23 +252,29 @@
         <div class="contain">
           <a href="https://collollll.github.io/weather/" target="_blank">
             <img src="img/project_weather.png" alt="" />
-            <!-- <video src="img/vid.mp4" muted loop autoplay></video -->
           </a>
           <div class="textBox">
             <h3>Weather</h3>
             <p>#HTML #CSS #JS</p>
-            <button class="process"><a href="#">작업과정</a></button>
+            <div class="buttons">
+              <button class="process"><a href="#">기획서</a></button>
+              <button class="process go">
+                <a href="https://collollll.github.io/weather/">
+                  <i class="fa-solid fa-arrow-up-right-from-square"></i
+                ></a>
+              </button>
+            </div>
           </div>
         </div>
       </div>
       <div class="spacer"></div>
 
-      <!-- <div class="projectList">
+      <div class="projectList">
         <p class="subTitle">05</p>
         <div class="contain">
           <a href="https://collollll.github.io/weather/" target="_blank">
-            <video src="img/vid.mp4" muted loop autoplay></video>
-            <img src="img/project_todo.png" alt="" />
+            <video src="img/vid3.mp4" muted loop autoplay></video>
+            <!-- <img src="img/project_todo.png" alt="" /> -->
           </a>
           <div class="textBox">
             <h3>Weather</h3>
@@ -143,28 +283,79 @@
           </div>
         </div>
       </div>
-      <div class="spacer"></div> -->
+      <div class="spacer"></div>
 
       <div id="cursor">Go</div>
     </section>
 
     <section id="work">
       <h2>WORK</h2>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam id,
+        ipsa facilis excepturi accusantium, eos, libero quos sequi cum deleniti
+        quam explicabo illo culpa omnis recusandae velit quasi provident eaque?
+      </p>
       <div class="all">
         <div class="wrap">
           <ul class="workList">
             <li class="card">
-              <!-- <img src="img/main_squ.png" alt="" /> -->
-              <img
-                src="https://img.icons8.com/external-itim2101-flat-itim2101/64/external-coffee-cup-coffee-itim2101-flat-itim2101.png"
-              />
+              <img src="img/cafe2.jpg" />
               <p>카페 홈페이지 디자인</p>
             </li>
-            <li class="card">2</li>
+            <li class="card">
+              <img src="img/cafe2.jpg" />
+              <p>영화 홈페이지 디자인</p>
+            </li>
             <li class="card">3</li>
             <li class="card">4</li>
             <li class="card">5</li>
           </ul>
+        </div>
+      </div>
+      <div class="workModal">
+        <div class="modalText">
+          <img src="img/2.PNG" alt="" />
+          <div class="right">
+            <h3>
+              카페 디자인 <button><a href="#">바로가기</a></button>
+            </h3>
+            <h4>기획의도</h4>
+            <p>
+              Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+              Doloribus delectus quis ut accusantium aspernatur enim praesentium
+              voluptas ea, repellendus iste velit quisquam inventore quas
+              corporis non ad? Unde, nulla modi!
+            </p>
+            <h4>작업기간</h4>
+            <p>~</p>
+            <h4>기여도</h4>
+            <p>100%</p>
+            <h4>사용 툴</h4>
+            <p>html, css, js, jquery, 등..</p>
+          </div>
+          <i class="fas fa-times close"></i>
+        </div>
+        <div class="modalText">
+          <img src="img/3.PNG" alt="" />
+          <div class="right">
+            <h3>
+              영화 디자인 <button><a href="#">바로가기</a></button>
+            </h3>
+            <h4>기획의도</h4>
+            <p>
+              Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+              Doloribus delectus quis ut accusantium aspernatur enim praesentium
+              voluptas ea, repellendus iste velit quisquam inventore quas
+              corporis non ad? Unde, nulla modi!
+            </p>
+            <h4>작업기간</h4>
+            <p>~</p>
+            <h4>기여도</h4>
+            <p>100%</p>
+            <h4>사용 툴</h4>
+            <p>html, css, js, jquery, 등..</p>
+          </div>
+          <i class="fas fa-times close"></i>
         </div>
       </div>
     </section>
@@ -174,35 +365,47 @@
       <div class="pin">
         <p>어떤 디자인을 작업했나요</p>
       </div>
+      <div class="scroll">
+        <div></div>
+        <!-- <div></div> -->
+      </div>
       <ul>
-        <li class="on">
+        <li>
           <img src="img/illust01.jpg" alt="" />
           <p>1</p>
         </li>
-        <li class="on">
+        <li>
           <img src="img/illust02.png" alt="" />
           <p>2</p>
         </li>
-        <li class="on">
+        <li>
           <img src="img/illust03.jpg" alt="" />
           <p>3</p>
         </li>
-        <li class="on">
+        <li>
           <img src="img/illust04.jpg" alt="" />
           <p>4</p>
         </li>
-        <li>
+        <li class="on">
           <img src="img/illust05.png" alt="" />
           <p>5</p>
         </li>
-        <li>
+        <li class="on">
           <img src="img/illust06.jpg" alt="" />
           <p>6</p>
         </li>
       </ul>
     </section>
 
-    <script src="section03.js"></script>
+    <!-- <div class="wrap">
+          <div class="doorBox">
+            <div class="room"></div>
+            <div class="door"></div>
+          </div>
+        </div> -->
+
+    <!-- <script src="section03.js"></script> -->
     <script src="custom.js"></script>
+    <!-- <script src="test2_251214.js"></script> -->
   </body>
 </html>
